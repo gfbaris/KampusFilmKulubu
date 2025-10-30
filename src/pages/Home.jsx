@@ -37,7 +37,7 @@ function Home({ handleSearch }) {
         </aside>
       </div>
       
-      <Footer isim="[Adınız Soyadınız - Öğrenci Numaranız]" />
+      <Footer isim="Barış Saylık" />
     </div>
   );
 }
