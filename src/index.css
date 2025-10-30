@@ -1,0 +1,584 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+/* GLOBAL STYLES */
+:root {
+    --color-bg: #0A192F;         /* Ana Arka Plan (Midnight Blue) */
+    --color-text: #CCD6F6;       /* Açık Gri Yazı */
+    --color-primary: #00A896;    /* Vurgu Rengi (Deep Teal) */
+    --color-secondary: #112240;  /* Kart/Panel Arka Planı */
+    --color-header: #051429;     /* Sabit Header BG */
+    --color-accent: #FFD700;     /* Altın Sarısı (Puan) */
+    --color-error: #FF6B6B;      /* Kırmızı Hata */
+    --header-height: 140px;      /* Header yüksekliği */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+}
+
+/* APP CONTAINER */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* SABİT HEADER */
+.fixed-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--color-header);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: var(--color-secondary);
+}
+
+.logo-text {
+    font-size: 1.8em;
+    font-weight: 900;
+    color: var(--color-primary);
+    letter-spacing: 1px;
+}
+
+.header-nav .nav-link {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.header-nav .nav-link:hover {
+    background-color: rgba(0, 168, 150, 0.2);
+    color: var(--color-primary);
+}
+
+/* ARAMA VE FİLTRE */
+.search-filter-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: var(--color-header);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* INPUT VE BUTONLAR */
+.search-box, .filters-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-box input, .filters-container select, .filters-container input {
+    padding: 10px 15px;
+    border: 2px solid var(--color-primary);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+.search-box button, .reset-button, .pagination-button, .card-actions button {
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+.search-box button:hover, .pagination-button:not([disabled]):hover, .reset-button:hover, .card-actions button:hover {
+    background-color: #008779;
+}
+.reset-button {
+    background-color: #6c757d;
+}
+.reset-button:hover {
+    background-color: #5a6268;
+}
+
+/* MAIN CONTENT VE WATCHLIST */
+.main-content {
+    display: flex;
+    flex: 1;
+    padding: 40px 40px 0;
+    gap: 30px;
+}
+
+.tv-list-area {
+    flex: 3; 
+    min-width: 0;
+}
+
+.watchlist-area {
+    flex: 1;
+    max-width: 350px;
+    background-color: var(--color-secondary);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    height: fit-content; 
+    position: sticky; 
+    top: calc(var(--header-height) + 10px);
+    border: 1px solid rgba(0, 168, 150, 0.3);
+}
+
+.watchlist-panel h2 {
+    color: var(--color-primary);
+    border-bottom: 3px double var(--color-primary);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    text-shadow: 0 0 5px rgba(0, 168, 150, 0.5);
+}
+
+.watchlist-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.watchlist-image {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+.watchlist-item .remove-button {
+    background-color: var(--color-error);
+    font-size: 0.8em;
+    padding: 5px 10px;
+}
+
+/* TV LIST AND CARDS */
+.tv-list-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.tv-card {
+    background-color: var(--color-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    transition: transform 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    min-height: 480px; 
+    border: 1px solid var(--color-secondary);
+}
+
+.tv-card:hover {
+    transform: scale(1.03); 
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+}
+
+.tv-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.tv-card h3 {
+    padding: 15px 15px 5px;
+    color: var(--color-primary);
+    font-size: 1.3em;
+    min-height: 55px;
+}
+
+.metadata-badges {
+    padding: 0 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.rating-badge {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+}
+.genre-badge {
+    background-color: #495057;
+    color: white;
+}
+.lang-badge {
+    background-color: #38a3a5;
+    color: white;
+}
+
+.summary-text {
+    padding: 0 15px;
+    font-size: 0.9em;
+    color: rgba(204, 214, 246, 0.7);
+    flex-grow: 1;
+}
+
+.card-actions {
+    margin-top: auto;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-actions .detail-button {
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+}
+.card-actions .detail-button:hover {
+    background-color: rgba(0, 168, 150, 0.2);
+}
+.card-actions .add {
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+    border: none;
+}
+.card-actions .remove {
+    background-color: var(--color-error);
+    color: white;
+    border: none;
+}
+
+/* SAYFALAMA (Pagination) - İYİLEŞTİRİLMİŞ */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 40px 0 60px;
+    background-color: var(--color-secondary);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 168, 150, 0.3);
+}
+
+/* Sayfa Numarası Butonları */
+.pagination-container .pagination-button {
+    padding: 8px 14px; 
+    background-color: #38a3a5; 
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+/* Aktif Sayfa Numarası Butonu */
+.pagination-container .pagination-button.active {
+    background-color: var(--color-accent); 
+    color: var(--color-bg);
+    box-shadow: 0 0 10px var(--color-accent);
+}
+
+/* İleri/Geri Butonları */
+.pagination-container .pagination-button:not(.page-number-button) {
+    background-color: var(--color-primary);
+    padding: 8px 18px; 
+}
+.pagination-container .pagination-button:not(.page-number-button):disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Sayfa Bilgisi */
+.page-info {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 15px;
+}
+.page-info b {
+    color: var(--color-accent);
+    margin: 0 4px;
+}
+
+/* FOOTER */
+.app-footer {
+    background-color: var(--color-secondary); 
+    color: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto; 
+}
+
+/* --- SHOW DETAIL CSS --- */
+
+.show-detail-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: var(--color-secondary);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(0, 168, 150, 0.3);
+}
+
+/* YENİ: Anasayfaya Dön Butonu Stili */
+.back-to-home-button {
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    background-color: #38a3a5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+.back-to-home-button:hover {
+    background-color: #2a8b8c;
+    transform: translateX(-5px); 
+}
+
+.detail-header {
+    display: flex;
+    gap: 50px;
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 3px solid var(--color-header);
+}
+
+.detail-poster {
+    width: 300px;
+    height: 420px;
+    min-width: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 168, 150, 0.6);
+    filter: brightness(0.9);
+}
+
+.detail-info h1 {
+    color: var(--color-primary);
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.detail-badges {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.detail-badges .badge {
+    padding: 8px 15px;
+    font-size: 1em;
+}
+
+.detail-summary {
+    font-size: 1.15em;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    color: var(--color-text);
+    padding-right: 20px;
+}
+
+.detail-meta p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.detail-meta strong {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.source-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: #38a3a5; 
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+.source-button:hover {
+    background-color: #2a8b8c;
+    transform: translateY(-2px);
+}
+
+
+/* EPISODES SECTION */
+.episodes-section h2 {
+    color: var(--color-accent);
+    font-size: 2.2em;
+    margin-bottom: 30px;
+    border-left: 5px solid var(--color-accent);
+    padding-left: 15px;
+}
+
+.season-block {
+    background-color: var(--color-header);
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.season-block h3 {
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    border-bottom: 1px solid rgba(0, 168, 150, 0.5);
+    padding-bottom: 10px;
+}
+
+.episode-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.episode-item {
+    display: grid;
+    /* Bölüm No, Adı, Tarih, Süre */
+    grid-template-columns: 90px 4fr 120px 80px; 
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+.episode-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.episode-item:last-child {
+    border-bottom: none;
+}
+
+.ep-number {
+    font-weight: 800;
+    color: var(--color-accent);
+    font-size: 1.1em;
+}
+
+.ep-name {
+    padding-left: 15px;
+}
+
+.ep-airdate {
+    text-align: right;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+
+.ep-runtime {
+    text-align: right;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.detail-loading, .detail-error, .no-results {
+    font-size: 1.5em;
+    padding: 50px;
+    text-align: center;
+}
+.detail-error {
+    color: var(--color-error);
+}
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
